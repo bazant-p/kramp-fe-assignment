@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { groupBy } from '../utils/groupBy';
+import { GRAPHQL_URL } from '../utils/fetchGraphQL';
 import ProductCard from '../components/ProductCard';
 import styles from './search.module.css';
 
@@ -17,7 +18,7 @@ export default function SearchPage() {
 
     setIsLoading(true);
 
-    fetch('http://localhost:4000/graphql', {
+    fetch(GRAPHQL_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       signal: controller.signal,

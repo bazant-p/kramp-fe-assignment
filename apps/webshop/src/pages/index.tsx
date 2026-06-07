@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next';
 import ProductCard from '../components/ProductCard';
+import { GRAPHQL_URL } from '../utils/fetchGraphQL';
 import styles from './index.module.css';
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -7,7 +8,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   let featured = [];
 
   try {
-    const res = await fetch('http://localhost:4000/graphql', {
+    const res = await fetch(GRAPHQL_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

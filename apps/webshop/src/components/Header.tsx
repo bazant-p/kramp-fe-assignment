@@ -6,9 +6,8 @@ import { CartContext } from '../pages/_app';
 import { SearchDialog } from './SearchDialog';
 import { CartIcon } from './cartIcon';
 import { useDebounce } from '../hooks/useDebounce';
+import { GRAPHQL_URL } from '../utils/fetchGraphQL';
 import styles from './Header.module.css';
-
-var GRAPHQL_URL = 'http://localhost:4000/graphql';
 
 export function Header() {
   const router = useRouter();
