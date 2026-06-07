@@ -3,6 +3,15 @@ import { WithNxOptions } from '@nx/next/plugins/with-nx';
 
 const nextConfig: WithNxOptions = {
   nx: {},
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        pathname: '/**',
+      },
+    ],
+  },
 };
 
 const plugins = [withNx];

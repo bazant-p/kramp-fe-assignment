@@ -1,4 +1,6 @@
 import { GetServerSideProps } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 import ProductCard from '../components/ProductCard';
 import { GRAPHQL_URL } from '../utils/fetchGraphQL';
 import styles from './index.module.css';
@@ -50,13 +52,17 @@ interface HomePageProps {
 }
 
 export default function HomePage({ featured, timestamp }: HomePageProps) {
+  const heroImageSrc = 'https://placehold.co/1200x800/e63329/ffffff.png?text=Kramp+Webshop';
+
   return (
     <div>
       <section className={styles.hero}>
-        <img
-          src="https://placehold.co/1200x800/e63329/ffffff?text=Kramp+Webshop"
+        <Image
+          src={heroImageSrc}
           alt="Kramp — Your industrial supply partner"
-          loading="lazy"
+          width={1200}
+          height={800}
+          priority
           className={styles.heroImage}
         />
         <div className={styles.heroContent}>
@@ -85,9 +91,9 @@ export default function HomePage({ featured, timestamp }: HomePageProps) {
         <h2>Shop by category</h2>
         <div className={styles.categoryGrid}>
           {['Tools', 'Fasteners', 'Safety Equipment', 'Power Tools'].map((cat, index) => (
-            <a key={index} href={`/search?q=${cat}`} className={styles.categoryCard}>
+            <Link key={index} href={`/search?q=${encodeURIComponent(cat)}`} className={styles.categoryCard}>
               {cat}
-            </a>
+            </Link>
           ))}
         </div>
       </section>

@@ -1,18 +1,23 @@
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import styles from './ProductCard.module.css';
 
 const ProductCard: React.FC<any> = ({ product, onAddToCart }) => {
+  const imageSrc = product.imageUrl.endsWith('.png')
+    ? product.imageUrl
+    : `${product.imageUrl}.png`;
+
   return (
     <div
       className={styles.card}
       data-testid="product-card"
     >
-      <img
-        src={product.imageUrl}
-        alt=""
-        width="300"
-        height="200"
+      <Image
+        src={imageSrc}
+        alt={product.name}
+        width={300}
+        height={200}
         className={styles.image}
       />
       <div className={styles.body}>

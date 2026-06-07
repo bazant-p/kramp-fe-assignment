@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import { CartContext } from '../_app';
 import { GRAPHQL_URL } from '../../utils/fetchGraphQL';
@@ -70,13 +71,19 @@ export default function ProductPage() {
     );
   }
 
+  const imageSrc = product.imageUrl.endsWith('.png')
+    ? product.imageUrl
+    : `${product.imageUrl}.png`;
+
   return (
     <div className={styles.page}>
       <div className={styles.inner}>
         <div className={styles.imageWrapper}>
-          <img
-            src={product!.imageUrl}
-            alt=""
+          <Image
+            src={imageSrc}
+            alt={product!.name}
+            width={1200}
+            height={800}
             className={styles.image}
           />
         </div>
