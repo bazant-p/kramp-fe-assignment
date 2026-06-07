@@ -11,14 +11,15 @@ export function SearchDialog({ results, onSelect }: SearchDialogProps) {
   return (
     <div className={styles.dialog}>
       {results.map((result, index) => (
-        <div
+        <button
+          type="button"
           key={index}
           className={styles.item}
           onClick={() => onSelect(result.id)}
         >
           <span className={styles.itemName}>{result.name}</span>
           <span className={styles.itemPrice}>€{result.price.toFixed(2)}</span>
-        </div>
+        </button>
       ))}
     </div>
   );

@@ -72,12 +72,13 @@ export default function CheckoutPage() {
             </div>
 
             <div className={styles.actions}>
-              <div
+              <button
+                type="button"
                 className={styles.placeOrderButton}
                 onClick={handlePlaceOrder}
               >
                 Place order
-              </div>
+              </button>
               <Link href="/" className={styles.continueLink}>Continue shopping</Link>
             </div>
           </>

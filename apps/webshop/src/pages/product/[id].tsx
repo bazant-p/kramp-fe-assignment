@@ -90,9 +90,9 @@ export default function ProductPage() {
             {' · '}
             {product!.stock} in stock
           </p>
-          <div className={styles.addToCart} onClick={handleAddToCart}>
+          <button type="button" className={styles.addToCart} onClick={handleAddToCart}>
             Add to cart
-          </div>
+          </button>
         </div>
       </div>
     </div>

@@ -19,10 +19,21 @@
   padding: 10px 14px;
   cursor: pointer;
   border-bottom: 1px solid #f0f0f0;
+  width: 100%;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  background: transparent;
+  text-align: left;
 }
 
 .item:hover {
   background: #f9f9f9;
+}
+
+.item:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: -2px;
 }
 
 .item:last-child {
