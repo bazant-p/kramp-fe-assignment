@@ -48,8 +48,7 @@ builder.queryType({
       args: {
         id: t.arg.id({ required: true }),
       },
-      resolve: async (_root, args) => {
-        await new Promise(r => setTimeout(r, 800));
+      resolve: (_root, args) => {
         console.log('product resolver called with id:', args.id);
         return getProductById(args.id) ?? null;
       },
@@ -71,10 +70,9 @@ builder.queryType({
       args: {
         ids: t.arg.idList({ required: true }),
       },
-      resolve: async (_root, args) => {
+      resolve: (_root, args) => {
         const results: Product[] = [];
         for (const id of args.ids) {
-          await new Promise(r => setTimeout(r, 800));
           const product = getProductById(id);
           if (product) results.push(product);
         }
