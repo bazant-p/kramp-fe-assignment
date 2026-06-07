@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { CartItem } from '../types';
 
 const stored: CartItem[] =
@@ -20,12 +19,9 @@ export function useCart() {
     if (typeof window !== 'undefined') {
       localStorage.setItem('cart', JSON.stringify(cart));
     }
-  });
+  }, [cart]);
 
   const addToCart = (item: Omit<CartItem, 'productId'> & { productId: string }) => {
-    const id = uuidv4();
-    console.log('adding to cart, entry id:', id);
-
     setCart(prev => {
       const existing = prev.find(i => i.productId === item.productId);
       if (existing) {
