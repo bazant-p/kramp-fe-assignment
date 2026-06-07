@@ -6,18 +6,21 @@ import styles from './search.module.css';
 
 export default function SearchPage() {
   const router = useRouter();
+  const searchQuery = typeof router.query.q === 'string' ? router.query.q : '';
   const [results, setResults] = useState<any[]>([]);
-  const [filteredResults, setFilteredResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const q = (router.query.q as string) || '';
+    if (!router.isReady) return;
+
+    const controller = new AbortController();
 
     setIsLoading(true);
 
     fetch('http://localhost:4000/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
       body: JSON.stringify({
         query: `
           query SearchProducts($q: String!) {
@@ -33,33 +36,39 @@ export default function SearchPage() {
             }
           }
         `,
-        variables: { q },
+        variables: { q: searchQuery },
       }),
     })
       .then(res => res.json())
       .then(data => {
-        console.log('search results:', data);
-        setResults(data.data.searchProducts);
+        setResults(data.data?.searchProducts ?? []);
+      })
+      .catch(error => {
+        if (error?.name !== 'AbortError') {
+          setResults([]);
+        }
+      })
+      .finally(() => {
         setIsLoading(false);
       });
-  }, []);
 
-  useEffect(() => {
-    setFilteredResults(results);
-  }, [results]);
+    return () => {
+      controller.abort();
+    };
+  }, [router.isReady, searchQuery]);
 
-  const grouped = groupBy(filteredResults, 'category');
+  const grouped = groupBy(results, 'category');
 
   return (
     <div className={styles.page}>
       <div className={styles.inner}>
         <h1 className={styles.heading}>
-          {router.query.q ? `Results for "${router.query.q}"` : 'All products'}
+          {searchQuery ? `Results for "${searchQuery}"` : 'All products'}
         </h1>
 
         {isLoading && <p>Loading...</p>}
 
-        {!isLoading && !filteredResults.length && (
+        {!isLoading && !results.length && (
           <p className={styles.empty}>No products found.</p>
         )}
 
